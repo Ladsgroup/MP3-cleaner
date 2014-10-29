@@ -13,8 +13,8 @@ for file in matches:
     file = eval("u\"%s\"" % file)
     try:
         audiofile = eyed3.load(file)
-        artist = audiofile.tag.artist
-        album = audiofile.tag.album
+        artist = audiofile.tag.artist.strip()
+        album = audiofile.tag.album.strip()
         try:
             os.mkdir('%s%s' % (path_to_move, artist))
         except OSError:
@@ -22,13 +22,17 @@ for file in matches:
         try:
             os.mkdir('%s%s/%s' % (path_to_move, artist, album))
         except OSError:
-            shutil.move(file, u'%s%s/%s/%s' % (path_to_move, artist, album, file.split("/")[-1]))
+            shutil.move(
+                file, u'%s%s/%s/%s' % (
+                    path_to_move, artist, album, file.split("/")[-1]))
             print "moved"
         except:
             print "Not moved"
             pass
         else:
-            shutil.move(file, u'%s%s/%s/%s' % (path_to_move, artist, album, file.split("/")[-1]))
+            shutil.move(
+                file, u'%s%s/%s/%s' % (
+                    path_to_move, artist, album, file.split("/")[-1]))
             print "Moved"
     except:
         pass
